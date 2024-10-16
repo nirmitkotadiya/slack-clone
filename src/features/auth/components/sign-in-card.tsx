@@ -11,12 +11,23 @@ import { Separator } from "@/components/ui/separator";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { SignInFlow } from "../types";
+import { useState } from "react";
+import { useAuthActions } from "@convex-dev/auth/react";
 
 interface SignInCardProps {
   setState: (state: SignInFlow) => void;
 }
 
 export const SignInCard = ({ setState }: SignInCardProps) => {
+  const { signIn } = useAuthActions();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleProviderSignIn = (value: "github" | "google") => {
+    signIn(value);
+  };
+
   return (
     <Card className="w-full h-full p-8">
       <CardHeader className="px-0 pt-0">
@@ -29,16 +40,16 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
         <form className="space-y-2.5">
           <Input
             disabled={false}
-            value=""
-            onChange={() => {}}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             type="email"
             required
           />
           <Input
             disabled={false}
-            value=""
-            onChange={() => {}}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             type="password"
             required
@@ -51,7 +62,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
         <div className="flex flex-col gap-y-2.5">
           <Button
             disabled={false}
-            onClick={() => {}}
+            onClick={() => handleProviderSignIn("google")}
             variant="outline"
             className="w-full relative"
           >
@@ -60,7 +71,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
           </Button>
           <Button
             disabled={false}
-            onClick={() => {}}
+            onClick={() => handleProviderSignIn("github")}
             variant="outline"
             className="w-full relative"
           >
