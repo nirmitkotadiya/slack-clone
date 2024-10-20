@@ -2,4 +2,3 @@
 
 5:20:41
 
-D:\Programming\slack-clone\src\app\workspace\[workspaceId]\invite-modal.tsx    => solve css
