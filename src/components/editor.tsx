@@ -10,11 +10,15 @@ import {
   useState,
 } from "react";
 import { Button } from "./ui/button";
-import { ImageIcon, Keyboard, Smile } from "lucide-react";
+import { ImageIcon, Smile } from "lucide-react";
 import { Hint } from "./hint";
 import { Delta, Op } from "quill/core";
 import { cn } from "@/lib/utils";
-import { current } from "../../convex/members";
+
+// Register the Keyboard module explicitly
+import Keyboard from "quill/modules/keyboard";
+import { EmojiPopover } from "./emoji-popover";
+Quill.register("modules/keyboard", Keyboard);
 
 type EditorValue = {
   image: File | null;
@@ -66,6 +70,7 @@ const Editor = ({
     const editorContainer = container.appendChild(
       container.ownerDocument.createElement("div")
     );
+
     const options: QuillOptions = {
       theme: "snow",
       placeholder: placeholderRef.current,
@@ -76,12 +81,12 @@ const Editor = ({
           [{ list: "ordered" }, { list: "bullet" }],
           ["clean"],
         ],
-        Keyboard: {
+        keyboard: {
           bindings: {
             enter: {
               key: "Enter",
               handler: () => {
-                return;
+                return false;
               },
             },
             shift_enter: {
@@ -136,6 +141,15 @@ const Editor = ({
     }
   };
 
+  const onEmojiSelect = (emoji: any) => {
+    const quill = quillRef.current;
+    if (!quill) {
+      return;
+    }
+
+    quill?.insertText(quill.getSelection()?.index || 0, emoji.native);
+  };
+
   const isEmpty = text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
 
   return (
@@ -144,7 +158,7 @@ const Editor = ({
         <div ref={containerRef} className="h-full ql-custom" />
         <div className="flex px-2 pb-2 z-[5]">
           <Hint
-            label={isToolbarVisible ? "Show formatting" : "Hide  formatting"}
+            label={!isToolbarVisible ? "Show formatting" : "Hide  formatting"}
           >
             <Button
               disabled={disabled}
@@ -155,17 +169,13 @@ const Editor = ({
               <PiTextAa className="size-4" />
             </Button>
           </Hint>
-
-          <Hint label="Emoji">
-            <Button
-              disabled={disabled}
-              size="iconSm"
-              variant="ghost"
-              onClick={() => {}}
-            >
-              <Smile className="size-4" />
-            </Button>
-          </Hint>
+          <EmojiPopover onEmojiSelect={onEmojiSelect}>
+            <Hint label="Emoji">
+              <Button disabled={disabled} size="iconSm" variant="ghost">
+                <Smile className="size-4" />
+              </Button>
+            </Hint>
+          </EmojiPopover>
 
           {variant === "create" && (
             <Hint label="Image">
