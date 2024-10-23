@@ -1,6 +1,11 @@
 import { differenceInMinutes, format, isToday, isYesterday } from "date-fns";
 import { GetMessagesReturnType } from "@/features/messages/api/use-get-messages";
 import { Message } from "./message";
+import { ChannelHero } from "./channel-hero";
+import { useState } from "react";
+import { Id } from "../../convex/_generated/dataModel";
+import { useWorkspaceId } from "@/hooks/use-workspacd-id";
+import { useCurrentMember } from "@/features/members/api/use-current-member";
 
 const TIME_THRESHOLD = 5;
 
@@ -33,6 +38,12 @@ export const MessageList = ({
   loadMore,
   canLoadMore,
 }: MessageListProps) => {
+  const [editingId, setEditingId] = useState<Id<"messages"> | null>(null);
+
+  const workspaceId = useWorkspaceId();
+
+  const { data: currentMember } = useCurrentMember({ workspaceId });
+
   const groupedMessages = data?.reduce(
     (groups, message) => {
       const date = new Date(message._creationTime);
@@ -75,15 +86,15 @@ export const MessageList = ({
                 memberId={message.memberId}
                 authorImage={message.user.image}
                 authorName={message.user.name}
-                isAuthor={false}
+                isAuthor={message.memberId === currentMember?._id}
                 reactions={message.reactions}
                 image={message.image}
                 updatedAt={message.updatedAt}
                 createdAt={message._creationTime}
-                isEditing={false}
-                setEditingId={() => {}}
+                isEditing={editingId === message._id}
+                setEditingId={setEditingId}
                 isCompact={isCompact}
-                hideThreadButton={false}
+                hideThreadButton={variant === "thread"}
                 threadCount={message.threadCount}
                 threadImage={message.threadImage}
                 threadTimestamp={message.threadTimeStamp}
@@ -93,6 +104,10 @@ export const MessageList = ({
           })}
         </div>
       ))}
+
+      {variant === "channel" && channelName && channelCreationTime && (
+        <ChannelHero name={channelName} creationTime={channelCreationTime} />
+      )}
     </div>
   );
 };
