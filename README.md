@@ -27,5 +27,7 @@ In this project, you'll learn how to create a Slack clone with the following fea
 - **Vercel** for deployment.
 
 ## Note:
+
 This project is currently in the **development stage.** If you would like to join as a developer, please contact the admin. If you have any queries, feel free to ask!
+
 
