@@ -1,11 +1,18 @@
 import { useParentMessageId } from "@/features/messages/store/use-parent-message-id";
-import { set } from "date-fns";
+import { useProfileMemberId } from "@/features/members/store/use-profile-member-id";
 
 export const usePanel = () => {
   const [parentMessageId, setParentMessageId] = useParentMessageId();
+  const [profileMemberId, setProfileMemberId] = useProfileMemberId();
+
+  const onOpenProfile = (memberId: string) => {
+    setProfileMemberId(memberId);
+    setParentMessageId(null);
+  };
 
   const onOpenMessage = (messageId: string) => {
-    setParentMessageId(messageId);
+    setParentMessageId(null);
+    setProfileMemberId(null);
   };
 
   const onClose = () => {
@@ -14,6 +21,8 @@ export const usePanel = () => {
 
   return {
     parentMessageId,
+    profileMemberId,
+    onOpenProfile,
     onOpenMessage,
     onClose,
   };
