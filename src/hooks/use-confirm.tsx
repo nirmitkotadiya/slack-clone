@@ -8,7 +8,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 export const useConfirm = (
@@ -19,7 +18,7 @@ export const useConfirm = (
     resolve: (value: boolean) => void;
   } | null>(null);
   const confirm = () =>
-    new Promise((resolve, reject) => {
+    new Promise((resolve, _reject) => {
       setPromise({ resolve });
     });
 

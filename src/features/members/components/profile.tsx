@@ -4,9 +4,7 @@ import { useGetMember } from "../api/use-get-member";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuRadioItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -62,9 +60,9 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
   const { data: member, isLoading: isLoadingMember } = useGetMember({
     id: memberId,
   });
-  const { mutate: updateMember, isPending: isUpdatingMember } =
+  const { mutate: updateMember, isPending: _isUpdatingMember } =
     useUpdateMember();
-  const { mutate: removeMember, isPending: isRemovingMember } =
+  const { mutate: removeMember, isPending: _isRemovingMember } =
     useRemoveMember();
 
   const onRemove = async () => {

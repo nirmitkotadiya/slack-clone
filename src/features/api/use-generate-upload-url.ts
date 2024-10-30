@@ -1,7 +1,6 @@
 import { useMutation } from "convex/react";
 
 import { useCallback, useMemo, useState } from "react";
-import { Id } from "../../../convex/_generated/dataModel";
 import { api } from "../../../convex/_generated/api";
 
 type ResponseType = string | null;

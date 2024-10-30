@@ -10,7 +10,7 @@ const isPublicPage = createRouteMatcher(["/auth"]);
 
 export default convexAuthNextjsMiddleware((request) => {
   const isAuthenticated = isAuthenticatedNextjs(); // Check if the user is authenticated
-  const url = new URL(request.url); // Get the request URL
+  // const url = new URL(request.url); // Get the request URL
 
   // If the user is not authenticated and trying to access a private page
   if (!isPublicPage(request) && !isAuthenticated) {

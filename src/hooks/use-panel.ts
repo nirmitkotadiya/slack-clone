@@ -10,7 +10,7 @@ export const usePanel = () => {
     setParentMessageId(null);
   };
 
-  const onOpenMessage = (messageId: string) => {
+  const onOpenMessage = (_messageId: string) => {
     setParentMessageId(null);
     setProfileMemberId(null);
   };

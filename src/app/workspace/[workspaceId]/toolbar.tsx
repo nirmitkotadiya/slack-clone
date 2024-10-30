@@ -3,7 +3,6 @@ import { useGetWorkSpace } from "@/features/workspaces/api/use-get-workspace";
 import { useWorkspaceId } from "@/hooks/use-workspacd-id";
 import { Info, Search } from "lucide-react";
 import {
-  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -11,13 +10,10 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 import { useState } from "react";
 import { useGetChannels } from "@/features/channels/api/use-get-channels";
 import { useGetMembers } from "@/features/members/api/use-get-members";
-import { channel } from "diagnostics_channel";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export const Toolbar = () => {

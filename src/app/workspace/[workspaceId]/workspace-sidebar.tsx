@@ -31,10 +31,10 @@ export const WorkspaceSidebar = () => {
   const { data: workspace, isLoading: workspaceLoading } = useGetWorkSpace({
     id: workspaceId,
   });
-  const { data: channels, isLoading: channelsLoading } = useGetChannels({
+  const { data: channels, isLoading: _channelsLoading } = useGetChannels({
     workspaceId,
   });
-  const { data: members, isLoading: membersLoading } = useGetMembers({
+  const { data: members, isLoading: _membersLoading } = useGetMembers({
     workspaceId,
   });
 
