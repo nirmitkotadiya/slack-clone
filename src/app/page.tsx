@@ -22,7 +22,7 @@ export default function Home() {
     } else if (!open) {
       setOpen(true);
     }
-  }, [workspaceId, isLoading, setOpen, open]);
+  }, [workspaceId, isLoading, setOpen, open, router]);
 
   return (
     <div className="h-full flex items-center justify-center">
